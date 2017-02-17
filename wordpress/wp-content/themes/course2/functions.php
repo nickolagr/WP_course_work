@@ -153,7 +153,35 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/jetpack.php';
 
 // here I have started edit code
-add_theme_support( 'post-formats', array( 'aside', 'gallery', 'video' ) );
+//add note type
+add_theme_support( 'post-formats', array( 'aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat' ) );
+// add style of pages
+add_theme_support( 'post-thumbnails');
+add_theme_support( 'html5');
+add_theme_support( 'custom-logo');
+add_theme_support( 'custom-header-uploads');
+add_theme_support( 'custom-header');
+add_theme_support( 'custom-background');
+add_theme_support( 'title-tag');
+add_theme_support( 'starter-content');
+// add sidebar menu
+function register_sidebar_menu() {
+  register_nav_menu('sidebar-menu',__( 'Sidebar Menu' ));
+}
+add_action( 'init', 'register_sidebar_menu' );
+// add footer menu
+function register_my_menu() {
+  register_nav_menu('footer-menu',__( 'Footer Menu' ));
+}
+add_action( 'init', 'register_my_menu' );
+//add bootstrap
+function theme_add_bootstrap() {
+	wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/bootstrap/css/bootstrap.min.css' );
+	wp_enqueue_style( 'style-css', get_template_directory_uri() . '/style.css' );
+	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/bootstrap/js/bootstrap.js', array(), '3.0.0', true );
+}
+add_action( 'wp_enqueue_scripts', 'theme_add_bootstrap' );
+
 
 //new element to customizer
 function course_register_theme_customizer( $wp_customize ) {
@@ -197,8 +225,6 @@ function course_register_theme_customizer( $wp_customize ) {
 		        'transport'  =>  'postMessage'
 		    )
 	);
-
-	          
 	// Add new element
 	$wp_customize->add_control(
 		    'course_display_header',
@@ -208,7 +234,36 @@ function course_register_theme_customizer( $wp_customize ) {
 		        'type'      => 'checkbox'
 		    )
 	);
-
+	// Add section for social
+	$wp_customize->add_section(
+	    'course_display_options2',
+	    array(
+	        'title'     => 'Show social icons',
+	        'priority'  => 200
+	    )
+	);
+	// Add settings2
+	$wp_customize->add_setting(
+		'course_display_footer',
+		    array(
+		        'default'    =>  'true',
+		        'transport'  =>  'postMessage'
+		    )
+	);
+	// Add new element2
+	$wp_customize->add_control(
+		    'course_display_footer',
+		    array(
+		        'section'   => 'course_display_options2',
+		        'label'     => 'Display icons?',
+		        'type'      => 'select',
+				'choices' => array(
+				'left' => 'Показать',
+				'right' => 'Спрятать',
+					)
+				)
+				
+	);
 
 }
 add_action( 'customize_register', 'course_register_theme_customizer' );
@@ -221,6 +276,10 @@ function course_customizer_css() {
         	<?php /* Add new style*/
 				if( false === get_theme_mod( 'course_display_header' ) ) { ?>
 				    #masthead { display: none !important; }
+			<?php } ?>
+			<?php /* Add new style2*/
+				if( false === get_theme_mod( 'course_display_footer' ) ) { ?>
+				    #masthead2 { display: none !important; }
 			<?php } ?>
     </style>
     <?php

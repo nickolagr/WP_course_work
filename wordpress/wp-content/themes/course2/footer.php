@@ -14,6 +14,18 @@
 	</div><!-- #content -->
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
+		<!--add my menu-->
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Footer Menu', 'course2' ); ?></button>
+			<?php wp_nav_menu( array( 'theme_location' => 'footer-menu' )); ?>
+		</nav>
+		<!--second my menu-->
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Sidebar Menu', 'course2' ); ?></button>
+			<?php wp_nav_menu( array( 
+			'theme_location' => 'sidebar-menu' )); ?>
+		</nav>
+		<!--other code-->
 		<div class="site-info">
 			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'course2' ) ); ?>"><?php printf( esc_html__( 'Proudly powered by %s', 'course2' ), 'WordPress' ); ?></a>
 			<span class="sep"> | </span>

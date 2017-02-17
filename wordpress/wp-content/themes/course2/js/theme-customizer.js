@@ -10,4 +10,9 @@
         	false === to ? $( '#masthead' ).hide() : $( '#masthead' ).show();
     } )
     } );
+	wp.customize( 'course_display_footer', function( value ) {
+    	value.bind( function( to ) {
+        	false === to ? $( '#masthead2' ).hide() : $( '#masthead2' ).show();
+    } )
+    } );
 })( jQuery );
